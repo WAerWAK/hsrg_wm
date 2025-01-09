@@ -1,0 +1,15 @@
+# application.yml
+spring:
+  datasource:  # 数据源配置
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hsrg?serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    # 密码开头有 0 要加双引号
+    # eg: password: "040229"
+    password: root
+# mybatis-plus配置,也可以不加,只是为了显示SQL,Springboot都自动配置好了
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+reggie:
+  path: D:\JAVA_Code\Junior3First\hsrg_wm\src\main\resources\backend\images\dishes\
