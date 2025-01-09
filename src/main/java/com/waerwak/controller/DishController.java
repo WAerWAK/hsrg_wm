@@ -105,6 +105,7 @@ public class DishController {
                 UpdateWrapper<Dish> wrapper1 = new UpdateWrapper<>();
                 wrapper1.eq("id",one.getId());
                 isSaved = dishService.update(dish,wrapper1);
+                dish.setId(one.getId());
             }else {
                 isSaved = dishService.save(dish);
             }
