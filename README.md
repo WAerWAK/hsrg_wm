@@ -14,7 +14,7 @@
   
 需要修改maven(3.8.1)仓库位置为自己的仓库位置  
 flie -> settings -> Build, Execution, Deployment -> build tools -> maven  
-修改application.yml中数据库密码与图片存储路径  
+修改application.yml中数据库密码与图片存储路径至 src/main/resources/backend/images/dishes  
   
 ![图片](https://github.com/user-attachments/assets/efc73326-5b40-4973-a259-8b3eead78df1)
 ![图片](https://github.com/user-attachments/assets/8a710ba2-5365-445e-81f1-a90ecda8028f)
