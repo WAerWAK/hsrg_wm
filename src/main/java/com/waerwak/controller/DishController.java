@@ -3,6 +3,7 @@ package com.waerwak.controller;
 import com.alibaba.druid.support.json.JSONUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.waerwak.common.R;
 import com.waerwak.entity.Category;
@@ -78,7 +79,7 @@ public class DishController {
         QueryWrapper<Dish> wrapper = new QueryWrapper<>();
         wrapper.eq("name",dishDto.getName());
         Dish one = dishService.getOne(wrapper);
-        if (one != null){
+        if (one != null && one.getIsDeleted() == 0){
             return R.error("已存在该菜品！");
         }
 
@@ -97,9 +98,16 @@ public class DishController {
         dish.setSort(0);
         dish.setIsDeleted(0);
 
+        boolean isSaved;
         // 处理口味数据（如果有）
         if (dishDto.getFlavors() != null && !dishDto.getFlavors().isEmpty()) {
-            boolean isSaved = dishService.save(dish);
+            if (one != null){
+                UpdateWrapper<Dish> wrapper1 = new UpdateWrapper<>();
+                wrapper1.eq("id",one.getId());
+                isSaved = dishService.update(dish,wrapper1);
+            }else {
+                isSaved = dishService.save(dish);
+            }
 
             // 保存每个口味信息
             for (DishDto.Flavor flavor : dishDto.getFlavors()) {
@@ -127,7 +135,13 @@ public class DishController {
             }
         } else {
             // 保存菜品
-            boolean isSaved = dishService.save(dish);
+            if (one != null){
+                UpdateWrapper<Dish> wrapper1 = new UpdateWrapper<>();
+                wrapper1.eq("id",one.getId());
+                isSaved = dishService.update(dish,wrapper1);
+            }else {
+                isSaved = dishService.save(dish);
+            }
             if (isSaved) {
                 return R.success("菜品添加成功！");
             } else {
