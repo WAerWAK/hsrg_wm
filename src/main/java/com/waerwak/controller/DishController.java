@@ -369,6 +369,7 @@ public class DishController {
     @GetMapping("/dish/list")
     public R getCategoryList(Long categoryId,String name){
         QueryWrapper<Dish> wrapper = new QueryWrapper<>();
+        wrapper.eq("status",1);
         if(name != null && !name.isEmpty()){
             wrapper.like(StringUtils.hasText(name),"name",name);
         }else {
